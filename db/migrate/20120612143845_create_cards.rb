@@ -5,6 +5,8 @@ class CreateCards < ActiveRecord::Migration
       t.integer :points
       t.string :status
 
+      t.integer :project_id
+
       t.timestamps
     end
   end

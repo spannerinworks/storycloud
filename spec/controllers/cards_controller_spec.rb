@@ -20,13 +20,6 @@ require 'spec_helper'
 
 describe CardsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Card. As you add validations to Card, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-  
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # CardsController. Be sure to keep this updated too.
@@ -36,7 +29,7 @@ describe CardsController do
 
   describe "GET index" do
     it "assigns all cards as @cards" do
-      card = Card.create! valid_attributes
+      card = create(:card)
       get :index, {}, valid_session
       assigns(:cards).should eq([card])
     end
@@ -44,7 +37,7 @@ describe CardsController do
 
   describe "GET show" do
     it "assigns the requested card as @card" do
-      card = Card.create! valid_attributes
+      card = create(:card)
       get :show, {:id => card.to_param}, valid_session
       assigns(:card).should eq(card)
     end
@@ -59,7 +52,7 @@ describe CardsController do
 
   describe "GET edit" do
     it "assigns the requested card as @card" do
-      card = Card.create! valid_attributes
+      card = create(:card)
       get :edit, {:id => card.to_param}, valid_session
       assigns(:card).should eq(card)
     end
@@ -69,18 +62,18 @@ describe CardsController do
     describe "with valid params" do
       it "creates a new Card" do
         expect {
-          post :create, {:card => valid_attributes}, valid_session
+          post :create, {:card => attributes_for(:card)}, valid_session
         }.to change(Card, :count).by(1)
       end
 
       it "assigns a newly created card as @card" do
-        post :create, {:card => valid_attributes}, valid_session
+        post :create, {:card => attributes_for(:card)}, valid_session
         assigns(:card).should be_a(Card)
         assigns(:card).should be_persisted
       end
 
       it "redirects to the created card" do
-        post :create, {:card => valid_attributes}, valid_session
+        post :create, {:card => attributes_for(:card)}, valid_session
         response.should redirect_to(Card.last)
       end
     end
@@ -105,7 +98,7 @@ describe CardsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested card" do
-        card = Card.create! valid_attributes
+        card = create(:card)
         # Assuming there are no other cards in the database, this
         # specifies that the Card created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,21 +108,21 @@ describe CardsController do
       end
 
       it "assigns the requested card as @card" do
-        card = Card.create! valid_attributes
-        put :update, {:id => card.to_param, :card => valid_attributes}, valid_session
+        card = create(:card)
+        put :update, {:id => card.to_param, :card => attributes_for(:card)}, valid_session
         assigns(:card).should eq(card)
       end
 
       it "redirects to the card" do
-        card = Card.create! valid_attributes
-        put :update, {:id => card.to_param, :card => valid_attributes}, valid_session
+        card = create(:card)
+        put :update, {:id => card.to_param, :card => attributes_for(:card)}, valid_session
         response.should redirect_to(card)
       end
     end
 
     describe "with invalid params" do
       it "assigns the card as @card" do
-        card = Card.create! valid_attributes
+        card = create(:card)
         # Trigger the behavior that occurs when invalid params are submitted
         Card.any_instance.stub(:save).and_return(false)
         put :update, {:id => card.to_param, :card => {}}, valid_session
@@ -137,7 +130,7 @@ describe CardsController do
       end
 
       it "re-renders the 'edit' template" do
-        card = Card.create! valid_attributes
+        card = create(:card)
         # Trigger the behavior that occurs when invalid params are submitted
         Card.any_instance.stub(:save).and_return(false)
         put :update, {:id => card.to_param, :card => {}}, valid_session
@@ -148,14 +141,14 @@ describe CardsController do
 
   describe "DELETE destroy" do
     it "destroys the requested card" do
-      card = Card.create! valid_attributes
+      card = create(:card)
       expect {
         delete :destroy, {:id => card.to_param}, valid_session
       }.to change(Card, :count).by(-1)
     end
 
     it "redirects to the cards list" do
-      card = Card.create! valid_attributes
+      card = create(:card)
       delete :destroy, {:id => card.to_param}, valid_session
       response.should redirect_to(cards_url)
     end

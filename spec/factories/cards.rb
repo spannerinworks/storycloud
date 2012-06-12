@@ -2,8 +2,6 @@
 
 FactoryGirl.define do
   factory :card do
-    description "MyText"
-    points 1
-    status "MyString"
+    sequence(:description) {|n| "card description #{n}" }
   end
 end
