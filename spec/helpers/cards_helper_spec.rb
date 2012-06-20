@@ -1,15 +1,21 @@
 require 'spec_helper'
-
-# Specs in this file have access to a helper object that includes
-# the CardsHelper. For example:
-#
-# describe CardsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe CardsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'to_html' do
+    it 'should convert model to html' do
+      card = build :card, id: 17, description: 'a description', points: 1, status: 'ready', project_id: 19, updated_at: Time.parse('2012-01-01 00:00')
+
+      html_string = to_html(card)
+
+      html_doc = Nokogiri::XML(html_string)
+
+      html_doc.xpath('article/h2').text.should == card.description
+      html_doc.xpath('article/span[1]').text.should == card.points.to_s
+      html_doc.xpath('article/span[2]').text.should == card.status
+
+      Time.parse(html_doc.xpath('article/span[3]').text).should == card.updated_at
+
+    end
+  end
+
 end

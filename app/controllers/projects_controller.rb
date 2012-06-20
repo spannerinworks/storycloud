@@ -42,4 +42,10 @@ class ProjectsController < ApplicationController
 
     redirect_to projects_url
   end
+
+  def stream
+    @project = Project.find(params[:id])
+
+  end
+
 end

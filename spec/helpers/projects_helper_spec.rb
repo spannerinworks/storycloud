@@ -1,15 +1,17 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the ProjectsHelper. For example:
-#
-# describe ProjectsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe ProjectsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'to_html' do
+    it 'should convert model to html' do
+      project = build :project, id: 17, name: 'a name', updated_at: Time.parse('2012-01-01 00:00')
+
+      html_string = to_html(project)
+
+      html_doc = Nokogiri::XML(html_string)
+
+      html_doc.xpath('article/h2').text.should == project.name
+      Time.parse(html_doc.xpath('article/span').text).should == project.updated_at
+
+    end
+  end
 end
