@@ -14,18 +14,22 @@
 ActiveRecord::Schema.define(:version => 20120612143845) do
 
   create_table "cards", :force => true do |t|
+    t.integer  "version",     :default => 0, :null => false
     t.text     "description"
     t.integer  "points"
     t.string   "status"
     t.integer  "project_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "projects", :force => true do |t|
+    t.integer  "version",    :default => 0, :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
+
+  add_index "projects", ["name"], :name => "index_projects_on_name", :unique => true
 
 end
