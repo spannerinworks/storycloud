@@ -10,7 +10,7 @@ describe CardsController do
   describe "GET index" do
     it "assigns all cards as @cards" do
       card = create(:card)
-      get :index, {}, valid_session
+      get :index, {:project_id => card.project}, valid_session
       assigns(:cards).should eq([card])
     end
   end
@@ -24,9 +24,14 @@ describe CardsController do
   end
 
   describe "GET new" do
+    before :each do
+      @project = create :project
+    end
+
     it "assigns a new card as @card" do
-      get :new, {}, valid_session
+      get :new, {:project_id => @project.id}, valid_session
       assigns(:card).should be_a_new(Card)
+      assigns(:card).project.should == @project
     end
   end
 
@@ -39,22 +44,26 @@ describe CardsController do
   end
 
   describe "POST create" do
+    before :each do
+      @project = create(:project)
+    end
+
     describe "with valid params" do
       it "creates a new Card" do
         expect {
-          post :create, {:card => attributes_for(:card)}, valid_session
+          post :create, {:card => attributes_for(:card), :project_id => @project.id}, valid_session
         }.to change(Card, :count).by(1)
       end
 
       it "assigns a newly created card as @card" do
-        post :create, {:card => attributes_for(:card)}, valid_session
+        post :create, {:card => attributes_for(:card), :project_id => @project.id}, valid_session
         assigns(:card).should be_a(Card)
         assigns(:card).should be_persisted
       end
 
       it "redirects to the created card" do
-        post :create, {:card => attributes_for(:card)}, valid_session
-        response.should redirect_to(Card.last)
+        post :create, {:card => attributes_for(:card), :project_id => @project.id}, valid_session
+        response.should redirect_to(project_card_path(@project.id, Card.last))
       end
     end
 
@@ -62,14 +71,14 @@ describe CardsController do
       it "assigns a newly created but unsaved card as @card" do
         # Trigger the behavior that occurs when invalid params are submitted
         Card.any_instance.stub(:save).and_return(false)
-        post :create, {:card => {}}, valid_session
+        post :create, {:card => {}, :project_id => @project.id}, valid_session
         assigns(:card).should be_a_new(Card)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Card.any_instance.stub(:save).and_return(false)
-        post :create, {:card => {}}, valid_session
+        post :create, {:card => {}, :project_id => @project.id}, valid_session
         response.should render_template("new")
       end
     end
@@ -96,7 +105,7 @@ describe CardsController do
       it "redirects to the card" do
         card = create(:card)
         put :update, {:id => card.to_param, :card => attributes_for(:card).merge(:version => card.version + 1)}, valid_session
-        response.should redirect_to(card)
+        response.should redirect_to(project_card_path(card.project, card))
       end
     end
 
@@ -130,7 +139,7 @@ describe CardsController do
     it "redirects to the cards list" do
       card = create(:card)
       delete :destroy, {:id => card.to_param}, valid_session
-      response.should redirect_to(cards_url)
+      response.should redirect_to(project_cards_path(card.project))
     end
   end
 

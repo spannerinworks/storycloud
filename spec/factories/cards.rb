@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :card do
     sequence(:description) {|n| "card description #{n}" }
+    project
   end
 end

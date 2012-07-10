@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe "cards/show" do
   before(:each) do
-    @card = assign(:card, stub_model(Card,
-      :description => "MyText",
-      :points => 1,
-      :status => "Status"
-    ))
+    @card = assign(:card, create(:card, description: 'MyText', points: 1, status: 'Status'))
   end
 
   it "renders attributes in <p>" do

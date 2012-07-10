@@ -15,13 +15,13 @@
     <td><%= card.description %></td>
     <td><%= card.points %></td>
     <td><%= card.status %></td>
-    <td><%= link_to 'Show', card %></td>
-    <td><%= link_to 'Edit', edit_card_path(card) %></td>
-    <td><%= link_to 'Destroy', card, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', project_card_path(card.project, card) %></td>
+    <td><%= link_to 'Edit', edit_project_card_path(card.project, card) %></td>
+    <td><%= link_to 'Destroy', [card.project, card], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Card', new_card_path %>
+<%= link_to 'New Card', new_project_card_path(@project) %>

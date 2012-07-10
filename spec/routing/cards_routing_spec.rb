@@ -4,31 +4,31 @@ describe CardsController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/cards").should route_to("cards#index")
+      get("/projects/1/cards").should route_to(:controller => 'cards', :action => 'index', :project_id => '1')
     end
 
     it "routes to #new" do
-      get("/cards/new").should route_to("cards#new")
+      get("/projects/2/cards/new").should route_to(:controller => 'cards', :action => 'new', :project_id => '2')
     end
 
     it "routes to #show" do
-      get("/cards/1").should route_to("cards#show", :id => "1")
+      get("/projects/3/cards/1").should route_to(:controller => 'cards', :action => 'show', :project_id => '3', :id => '1')
     end
 
     it "routes to #edit" do
-      get("/cards/1/edit").should route_to("cards#edit", :id => "1")
+      get("/projects/5/cards/1/edit").should route_to(:controller => 'cards', :action => 'edit', :project_id => '5', :id => '1')
     end
 
     it "routes to #create" do
-      post("/cards").should route_to("cards#create")
+      post("/projects/7/cards").should route_to(:controller => 'cards', :action => 'create', :project_id => '7')
     end
 
     it "routes to #update" do
-      put("/cards/1").should route_to("cards#update", :id => "1")
+      put("/projects/11/cards/1").should route_to(:controller => 'cards', :action => 'update', :project_id => '11', :id => '1')
     end
 
     it "routes to #destroy" do
-      delete("/cards/1").should route_to("cards#destroy", :id => "1")
+      delete("/projects/13/cards/1").should route_to(:controller => 'cards', :action => 'destroy', :project_id => '13', :id => '1')
     end
 
   end

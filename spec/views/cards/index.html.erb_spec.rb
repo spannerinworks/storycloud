@@ -2,18 +2,9 @@ require 'spec_helper'
 
 describe "cards/index" do
   before(:each) do
-    assign(:cards, [
-      stub_model(Card,
-        :description => "MyText",
-        :points => 1,
-        :status => "Status"
-      ),
-      stub_model(Card,
-        :description => "MyText",
-        :points => 1,
-        :status => "Status"
-      )
-    ])
+    project = assign(:project, create(:project))
+    @cards = assign(:cards, [ create(:card, description: "MyText", points: 1, status: "Status", project: project),
+                              create(:card, description: "MyText", points: 1, status: "Status", project: project)])
   end
 
   it "renders a list of cards" do

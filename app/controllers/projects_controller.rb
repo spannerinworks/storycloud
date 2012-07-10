@@ -1,5 +1,8 @@
 
 class ProjectsController < ApplicationController
+
+  caches_page
+
   def index
     @projects = Project.all
   end

@@ -15,6 +15,10 @@ describe Project do
     Project.create(:name => 'alonso').version.should == 0
   end
 
+  it "should have a default shared sequence of 0" do
+    Project.create(:name => 'alonso').shared_sequence.sequence.should == 0
+  end
+
   it "should reject an update if version isn't incremented'" do
     p = Project.create(:name => 'alonso', :version => 17)
 
@@ -25,15 +29,9 @@ describe Project do
   end
 
   it "should have many cards" do
-    project = build(:project)
-    card1 = build(:card)
-    card2 = build(:card)
-    project.cards << card1
-    project.cards << card2
-
-    project.save.should be_true
-
-    project.reload
+    project = create(:project)
+    card1 = create(:card, :project => project)
+    card2 = create(:card, :project => project)
 
     project.cards.should == [card1, card2]
   end
