@@ -15,10 +15,6 @@ describe Project do
     Project.create(:name => 'alonso').version.should == 0
   end
 
-  it "should have a default shared sequence of 0" do
-    Project.create(:name => 'alonso').shared_sequence.sequence.should == 0
-  end
-
   it "should reject an update if version isn't incremented'" do
     p = Project.create(:name => 'alonso', :version => 17)
 

@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe SequenceObserver do
 
+  it 'should assign a default shared sequence of 0 to projects' do
+    Project.create(:name => 'alonso').shared_sequence.sequence.should == 0
+  end
+
   it 'should update the shared sequence when the project is updated' do
     project = create(:project, :name => 'foo')
     project.shared_sequence.sequence.should == 0
